@@ -1,0 +1,32 @@
+RETOKA — COMO TRANSFORMAR EM APP
+================================
+
+Arquivos desta pasta
+- index.html ............ o editor Retoka
+- manifest.webmanifest .. nome, ícone e cores do app
+- sw.js ................. faz o app funcionar sem internet
+- icon-*.png ............ ícones (normal e "maskable" para Android)
+
+PASSO 1 — Colocar no ar (obrigatório)
+O app só pode ser instalado a partir de um endereço com HTTPS.
+Envie a pasta inteira para o seu site, por exemplo:
+  https://wl-sistemas.github.io/retoka/  (repositório "retoka" na organização wl-sistemas)
+Opções grátis: GitHub Pages, Netlify (arrastar a pasta em app.netlify.com/drop) ou Vercel.
+Teste abrindo o endereço no Chrome do celular.
+
+PASSO 2 — Instalar como app (PWA)
+No Chrome do celular: menu ⋮ > "Instalar app" (ou "Adicionar à tela inicial").
+O app ganha ícone, abre em tela cheia e funciona offline depois da primeira abertura.
+As fontes dos textos ficam guardadas depois de usadas uma vez com internet.
+
+PASSO 3 — Gerar o APK
+1. Acesse https://www.pwabuilder.com
+2. Cole o endereço do PASSO 1 e clique em "Start".
+3. Em "Package for stores", escolha Android > "Generate Package".
+4. Baixe o .zip: ele traz o .apk (para instalar direto no celular) e o .aab (para a Play Store),
+   além do arquivo de assinatura. GUARDE a assinatura: ela é necessária para publicar atualizações.
+
+Para atualizar o app
+Troque o index.html no site. Para forçar a atualização no celular, mude a primeira linha do sw.js
+para a próxima versão (hoje está "retoka-v1"; troque para retoka-v2, v3...).
+Se você já tinha subido a versão anterior, basta substituir o index.html e o sw.js.
