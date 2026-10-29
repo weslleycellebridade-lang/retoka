@@ -69,7 +69,8 @@ svg { display: block; }
   padding-left: max(12px, env(safe-area-inset-left, 0px)); padding-right: max(12px, env(safe-area-inset-right, 0px));
   background: var(--ui); border-bottom: 1px solid var(--line); position: relative; z-index: 6;
 }
-.mark { flex: none; width: 34px; height: 34px; border-radius: 8px; background: #26292d; display: grid; place-items: center; overflow: hidden; }
+.mark { flex: none; width: 34px; height: 34px; border-radius: 8px; background: #26292d; display: grid; place-items: center; overflow: hidden; border: 0; padding: 0; cursor: pointer; }
+.mark:hover { box-shadow: 0 0 0 3px var(--ui2); }
 .mark svg { width: 34px; height: 34px; }
 .projbtn { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 0; background: none; border: 0; padding: 4px 6px; border-radius: 8px; cursor: pointer; text-align: left; }
 .projbtn:hover { background: var(--ui2); }
@@ -218,6 +219,43 @@ textarea.field { resize: vertical; min-height: 74px; }
 ol.steps { margin: 0; padding-left: 20px; font-size: 13.5px; display: grid; gap: 4px; }
 code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radius: 4px; }
 
+/* início */
+.home { position: fixed; inset: 0; z-index: 20; background: var(--ui); overflow-y: auto; overscroll-behavior: contain;
+  padding: calc(env(safe-area-inset-top, 0px) + 16px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 28px) max(16px, env(safe-area-inset-left, 0px)); }
+.home-in { max-width: 1000px; margin: 0 auto; display: grid; gap: 14px; }
+.home-top { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 4px; }
+.mark.big { width: 52px; height: 52px; border-radius: 12px; cursor: default; }
+.mark.big svg { width: 52px; height: 52px; }
+.home-title { flex: 1 1 180px; min-width: 0; }
+.home-title h1 { margin: 0; font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; text-transform: uppercase; letter-spacing: .02em; }
+.home-title p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.newgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.newcard { display: grid; gap: 2px; justify-items: start; align-content: end; min-height: 118px; padding: 14px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--ui2); cursor: pointer; text-align: left; color: var(--ink); }
+.newcard:hover { border-color: var(--muted); }
+.newcard b { font-size: 15px; margin-top: 8px; }
+.newcard small { color: var(--muted); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.newcard.primary { grid-column: 1 / -1; min-height: 96px; background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.newcard.primary small { color: inherit; opacity: .8; }
+.ratio { display: block; border: 2.5px solid currentColor; border-radius: 4px; opacity: .55; }
+.nicon svg { width: 30px; height: 30px; }
+.recents { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.rcard { position: relative; border: 1.5px solid var(--line); border-radius: 14px; background: var(--ui); overflow: hidden; display: grid; }
+.rcard.on { border-color: var(--ink); }
+.rcard .open { display: grid; gap: 0; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; color: var(--ink); }
+.rcard img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #26292d; display: block; }
+.rcard .meta2 { padding: 8px 10px 10px; display: grid; gap: 1px; min-width: 0; }
+.rcard b { font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rcard small { color: var(--muted); font-size: 12px; }
+.rcard .del { position: absolute; top: 6px; right: 6px; width: 36px; height: 36px; background: rgba(20,22,26,.72); color: #fff; border-radius: 10px; }
+.rcard .del:hover { background: rgba(20,22,26,.9); }
+.rcard .del.confirm { width: auto; padding: 0 10px; background: #b3261e; color: #fff; font-weight: 700; font-size: 13px; }
+@media (min-width: 700px) {
+  .newgrid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .newcard.primary { grid-column: auto; min-height: 118px; }
+  .recents { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+  .home { padding-top: calc(env(safe-area-inset-top, 0px) + 32px); }
+}
+
 /* aviso e janela */
 .toast { position: fixed; z-index: 30; left: 50%; transform: translateX(-50%); top: calc(64px + env(safe-area-inset-top, 0px)); max-width: min(92vw, 440px); width: max-content; display: flex; align-items: center; gap: 12px; background: #1c1e21; color: #f4f2ec; border-radius: 12px; padding: 10px 12px 10px 16px; font-size: 14px; box-shadow: 0 8px 24px rgba(0,0,0,.3); }
 .toast button { background: none; border: 0; color: #f5c022; font-weight: 700; font-size: 14px; cursor: pointer; padding: 6px; white-space: nowrap; }
@@ -252,10 +290,10 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
 
 <div class="app" id="app">
   <header class="topbar">
-    <div class="mark" title="Retoka" aria-hidden="true"><svg viewBox="0 0 34 34"><text x="17" y="22" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="21" fill="#f2b705">R</text><path d="M8 25.5h20l-2 2.5H6z" fill="#f2b705"/></svg></div>
-    <button type="button" class="projbtn" id="projBtn" aria-label="Projetos">
+    <button type="button" class="mark" id="homeBtn" title="Início" aria-label="Ir para o início"><svg viewBox="0 0 34 34"><text x="17" y="22" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="21" fill="#f2b705">R</text><path d="M8 25.5h20l-2 2.5H6z" fill="#f2b705"/></svg></button>
+    <button type="button" class="projbtn" id="projBtn" aria-label="Projeto atual">
       <span class="projname" id="projName">Retoka</span>
-      <span class="saved" id="savedTag">Abrindo…</span>
+      <span class="saved" id="savedTag"></span>
     </button>
     <div class="tb-actions">
       <button type="button" class="icon" id="undoBtn" data-icon="undo" aria-label="Desfazer" title="Desfazer (Ctrl+Z)" disabled></button>
@@ -283,7 +321,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     <div class="sheet-body" id="sheetBody">
 
       <!-- PROJETOS -->
-      <div class="pnl" data-p="projetos" data-title="Projetos" hidden>
+      <div class="pnl" data-p="projetos" data-title="Projeto" hidden>
         <div class="slider">
           <label for="nameIn">Nome do projeto</label>
           <input class="field" id="nameIn" maxlength="40" autocomplete="off">
@@ -292,11 +330,8 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
           <label class="btn primary" for="fileNew" data-icon="plus">Novo com imagem</label>
           <label class="btn" for="fileSwap" data-icon="swap">Trocar molde</label>
         </div>
-        <p class="note">"Trocar molde" mantém os textos, faixas e adesivos e troca só a imagem do caminhão. Use a imagem baixada do Imgur ou um molde, nunca print de tela.</p>
-        <button type="button" class="btn" id="sampleBtn" data-icon="truck">Abrir molde de exemplo</button>
-        <p class="lbl">Meus projetos</p>
-        <div class="projects" id="projList"></div>
-        <p class="note" id="noDbNote" hidden>Este navegador não deixa guardar projetos aqui. Baixe a imagem antes de fechar.</p>
+        <p class="note">"Trocar molde" mantém os textos, faixas e adesivos e troca só a imagem de fundo. Para skins, use a imagem baixada do Imgur ou um molde, nunca print de tela.</p>
+        <button type="button" class="btn" id="goHome" data-icon="home">Ir para o início (todos os projetos)</button>
       </div>
 
       <!-- PINTURA -->
@@ -308,9 +343,10 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
         <div class="cur">
           <span class="sw" id="srcDot"></span><span id="srcText">Cor atual</span>
           <span aria-hidden="true">→</span>
-          <span class="sw" id="tgtDot"></span><b id="tgtText">Vermelho</b>
+          <span class="sw" id="tgtDot"></span><b id="tgtText">escolha uma cor abaixo</b>
         </div>
-        <button type="button" class="btn" id="pickBtn" data-icon="pipette">Escolher no molde a cor que vai mudar</button>
+        <button type="button" class="btn" id="pickBtn" data-icon="pipette">Escolher na imagem a cor que vai mudar</button>
+        <button type="button" class="btn" id="resetColor" data-icon="undo" hidden>Voltar às cores originais</button>
         <div class="palette" id="palTarget"></div>
         <p class="lbl">Recentes</p>
         <div class="palette recent" data-recent="target"></div>
@@ -540,7 +576,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
   </section>
 
   <nav class="mainbar" id="mainBar" aria-label="Ferramentas">
-    <button type="button" class="tool" data-panel="projetos" data-icon="folder"><span>Projetos</span></button>
+    <button type="button" class="tool" id="homeTool" data-icon="home"><span>Início</span></button>
     <button type="button" class="tool" data-panel="pintura" data-icon="bucket"><span>Pintura</span></button>
     <button type="button" class="tool" data-panel="texto" data-icon="type"><span>Texto</span></button>
     <button type="button" class="tool" data-panel="elementos" data-icon="shapes"><span>Elementos</span></button>
@@ -568,6 +604,44 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     <button type="button" class="tool" data-a="lock" data-t="text stripes shape image locked" data-icon="lock" id="ctxLock"><span>Travar</span></button>
     <button type="button" class="tool danger" data-a="del" data-t="text stripes shape image locked" data-icon="trash"><span>Excluir</span></button>
   </nav>
+</div>
+
+<div class="home" id="home" hidden>
+  <div class="home-in">
+    <header class="home-top">
+      <div class="mark big" aria-hidden="true"><svg viewBox="0 0 34 34"><text x="17" y="22" text-anchor="middle" font-family="Big Shoulders Display, Impact, sans-serif" font-weight="800" font-size="21" fill="#f2b705">R</text><path d="M8 25.5h20l-2 2.5H6z" fill="#f2b705"/></svg></div>
+      <div class="home-title">
+        <h1>Retoka</h1>
+        <p>Editor de imagens para skins, artes e posts</p>
+      </div>
+      <button type="button" class="btn" id="homeBack" data-icon="back2" hidden>Voltar ao projeto</button>
+    </header>
+
+    <p class="lbl">Criar novo</p>
+    <div class="newgrid">
+      <label class="newcard primary" for="fileNew">
+        <span class="nicon" data-icon="upload"></span>
+        <b>Abrir imagem</b><small>Skin, molde ou foto do aparelho</small>
+      </label>
+      <button type="button" class="newcard" data-size="1080x1080" data-name="Post quadrado">
+        <span class="ratio" style="width:40px;height:40px"></span><b>Post quadrado</b><small>1080 × 1080</small>
+      </button>
+      <button type="button" class="newcard" data-size="1080x1920" data-name="Story">
+        <span class="ratio" style="width:24px;height:42px"></span><b>Story / Status</b><small>1080 × 1920</small>
+      </button>
+      <button type="button" class="newcard" data-size="1920x1080" data-name="Paisagem">
+        <span class="ratio" style="width:52px;height:29px"></span><b>Paisagem</b><small>1920 × 1080</small>
+      </button>
+      <button type="button" class="newcard" id="sampleBtn">
+        <span class="nicon" data-icon="truck"></span><b>Exemplo de skin</b><small>Molde Mercedes 1113</small>
+      </button>
+    </div>
+
+    <p class="lbl">Projetos recentes</p>
+    <div class="recents" id="projList"></div>
+    <p class="note" id="homeEmpty" hidden>Seus projetos aparecem aqui e ficam guardados neste aparelho.</p>
+    <p class="note" id="noDbNote" hidden>Este navegador não deixa guardar projetos aqui. Baixe a imagem antes de fechar.</p>
+  </div>
 </div>
 
 <input type="file" id="fileNew" accept="image/*" hidden>
@@ -636,7 +710,9 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     front: '<rect x="8" y="8" width="13" height="13" rx="2" fill="currentColor"/><path d="M4 16H3V3h13v1"/>',
     back: '<rect x="3" y="3" width="13" height="13" rx="2" fill="currentColor"/><path d="M20 8h1v13H8v-1"/>',
     centerH: '<path d="M12 2v20"/><rect x="5" y="6" width="14" height="4" rx="1"/><rect x="7" y="14" width="10" height="4" rx="1"/>',
-    centerV: '<path d="M2 12h20"/><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="7" width="4" height="10" rx="1"/>'
+    centerV: '<path d="M2 12h20"/><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="7" width="4" height="10" rx="1"/>',
+    home: '<path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2h-4v-7H9v7H5a2 2 0 0 1-2-2z"/>',
+    back2: '<path d="M19 12H5"/><path d="m12 19-7-7 7-7"/>'
   };
   function svgIcon(name) {
     return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + (ICON[name] || "") + "</svg>";
@@ -683,7 +759,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
   let img = null, baseBlob = null, fullW = 0, fullH = 0, W = 1, H = 1, isSample = false;
   let srcData = null, H_ = null, S_ = null, V_ = null, mask = null, maskDirty = false;
   let mode = "color", hs = 220, hsAuto = true, sRef = 1, vRef = .5;
-  let target = "#d81e2a", bright = 100, tol = 35, wl = 55;
+  let target = null, bright = 100, tol = 35, wl = 55;
   let objs = [], sel = -1, panel = null, picking = false, brushMode = "paint", showOriginal = false;
   let uploads = [];
   const baseC = document.createElement("canvas"), bctx = baseC.getContext("2d", { willReadFrequently: true });
@@ -716,6 +792,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     out[0] = r + (tmp[0] - r) * w; out[1] = g + (tmp[1] - g) * w; out[2] = b + (tmp[2] - b) * w;
   }
   function recolor() {
+    if (!target) { bctx.putImageData(srcData, 0, 0); return; }
     const P = params(), d = srcData.data, out = bctx.createImageData(W, H), o = out.data, px = [0, 0, 0];
     for (let i = 0, n = W * H; i < n; i++) {
       const j = i * 4;
@@ -1421,7 +1498,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
   }
   function togglePanel(name) { if (panel === name) closePanel(); else openPanel(name); }
   $("sheetClose").addEventListener("click", closePanel);
-  document.querySelectorAll("#mainBar .tool").forEach(b => b.addEventListener("click", () => { if (sel >= 0 && b.dataset.panel !== "camadas") select(-1); togglePanel(b.dataset.panel); }));
+  document.querySelectorAll("#mainBar .tool[data-panel]").forEach(b => b.addEventListener("click", () => { if (sel >= 0 && b.dataset.panel !== "camadas") select(-1); togglePanel(b.dataset.panel); }));
   $("projBtn").addEventListener("click", () => { select(-1); togglePanel("projetos"); });
   $("dlBtn").addEventListener("click", () => { select(-1); openPanel("baixar"); });
   function syncHint() {
@@ -1434,7 +1511,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     if (!panel) return;
     if (panel === "pintura") syncPaint();
     else if (panel === "camadas") renderLayers();
-    else if (panel === "projetos") renderProjects();
+    else if (panel === "projetos") $("nameIn").value = projName;
     else if (panel === "imagens") renderImgList();
     else if (panel === "baixar") { if (!$("fileName").value) $("fileName").value = projName; setStatus(""); }
     else if (panel.startsWith("c-")) syncObjControls();
@@ -1514,7 +1591,8 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     $("tolWrap").hidden = mode === "white"; $("wlWrap").hidden = mode !== "white"; $("pickBtn").hidden = mode === "white";
     $("srcDot").style.background = srcColorHex();
     $("srcText").textContent = mode === "white" ? "Partes brancas" : hsAuto ? "Cor atual" : "Cor escolhida";
-    $("tgtDot").style.background = target; $("tgtText").textContent = nameOf(target);
+    $("tgtDot").style.background = target || "transparent"; $("tgtText").textContent = target ? nameOf(target) : "escolha uma cor abaixo";
+    $("resetColor").hidden = !target;
     $("bright").value = bright; $("brightOut").textContent = bright + "%";
     $("tol").value = tol; $("tolOut").textContent = tol + "°";
     $("wl").value = wl; $("wlOut").textContent = wl + "%";
@@ -1525,6 +1603,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
   }
   $("modeColor").addEventListener("click", () => { mode = "color"; computeRefs(); invalidate(); syncPaint(); commit(); });
   $("modeWhite").addEventListener("click", () => { mode = "white"; picking = false; syncHint(); invalidate(); syncPaint(); commit(); });
+  $("resetColor").addEventListener("click", () => { target = null; invalidate(); syncPaint(); commit(); });
   $("pickBtn").addEventListener("click", () => { picking = !picking; $("pickBtn").classList.toggle("on", picking); syncHint(); });
   [["bright", v => { bright = v; $("brightOut").textContent = v + "%"; }], ["tol", v => { tol = v; $("tolOut").textContent = v + "°"; computeRefs(); syncPaint(); }], ["wl", v => { wl = v; $("wlOut").textContent = v + "%"; }]].forEach(([id, fn]) => {
     $(id).addEventListener("input", e => { fn(+e.target.value); invalidate(); });
@@ -1765,7 +1844,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     if (mod && e.key.toLowerCase() === "z") { e.preventDefault(); e.shiftKey ? redo() : undo(); return; }
     if (mod && e.key.toLowerCase() === "y") { e.preventDefault(); redo(); return; }
     if (mod && e.key.toLowerCase() === "d") { e.preventDefault(); dupObj(); return; }
-    if (e.key === "Escape") { if (panel) closePanel(); else select(-1); return; }
+    if (e.key === "Escape") { if (!$("home").hidden) { if (hasProject) hideHome(); return; } if (panel) closePanel(); else select(-1); return; }
     if (!o) return;
     if (e.key === "Delete" || e.key === "Backspace") { e.preventDefault(); delObj(); return; }
     const step = (e.shiftKey ? 10 : 1);
@@ -1853,11 +1932,11 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     if (saveT) { clearTimeout(saveT); await saveNow(); }
     await loadBase(blob);
     projId = newId(); projName = name; isSample = !!sample;
-    objs = []; sel = -1; uploads = []; hsAuto = true; target = "#d81e2a"; bright = 100; tol = 35; wl = 55;
+    objs = []; sel = -1; uploads = []; hsAuto = true; target = null; bright = 100; tol = 35; wl = 55;
     analyse(true);
     $("nameIn").value = projName; $("fileName").value = "";
     afterOpen();
-    if (!quiet) toast(sample ? "Molde de exemplo aberto." : "Projeto novo criado.");
+    if (!quiet) toast(sample ? "Exemplo aberto." : "Projeto novo criado.");
   }
   async function swapBase(blob) {
     await loadBase(blob); hsAuto = true; analyse(true); isSample = false;
@@ -1883,6 +1962,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     afterOpen(true);
   }
   function afterOpen(keepHistoryNote) {
+    hasProject = true; hideHome();
     needRecolor = true; fitted = true; onResize(); fit();
     $("projName").textContent = projName;
     resetHistory(); syncAll(); saveNow();
@@ -1894,33 +1974,62 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     if (d.toDateString() === now.toDateString()) return "hoje, " + hm;
     return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short" }) + ", " + hm;
   }
+  // ---------- tela de início ----------
+  let hasProject = false;
+  function showHome() {
+    if (saveT) { clearTimeout(saveT); saveNow(); }
+    closePanel(); if (sel >= 0) select(-1);
+    $("homeBack").hidden = !hasProject;
+    $("home").hidden = false; $("home").scrollTop = 0;
+    renderProjects();
+  }
+  function hideHome() { $("home").hidden = true; }
   async function renderProjects() {
     $("noDbNote").hidden = !!db;
     const L = $("projList");
-    if (!db) { L.textContent = ""; return; }
     let all = [];
-    try { all = await idbReq("readonly", s => s.getAll()); } catch (e) { all = []; }
+    if (db) { try { all = await idbReq("readonly", s => s.getAll()); } catch (e) { all = []; } }
     all.sort((a, b) => b.updated - a.updated);
     L.textContent = "";
+    $("homeEmpty").hidden = !db || all.length > 0;
     all.forEach(rec => {
-      const row = document.createElement("div"); row.className = "proj" + (rec.id === projId ? " on" : "");
+      const card = document.createElement("div"); card.className = "rcard" + (rec.id === projId && hasProject ? " on" : "");
+      const open = document.createElement("button"); open.type = "button"; open.className = "open";
       const im = document.createElement("img"); im.alt = ""; if (rec.thumb) im.src = rec.thumb;
-      const info = document.createElement("button"); info.type = "button"; info.className = "pinfo";
+      const m = document.createElement("span"); m.className = "meta2";
       const b = document.createElement("b"); b.textContent = rec.name || "Sem nome";
-      const sm = document.createElement("small"); sm.textContent = (rec.id === projId ? "Aberto agora · " : "") + fmtDate(rec.updated);
-      info.append(b, sm);
-      info.addEventListener("click", async () => { if (rec.id === projId) { closePanel(); return; } await openProject(rec); closePanel(); toast("Projeto aberto."); });
-      const del = document.createElement("button"); del.type = "button"; del.className = "icon del"; del.dataset.icon = "trash"; del.setAttribute("aria-label", "Excluir projeto");
+      const sm = document.createElement("small"); sm.textContent = (rec.id === projId && hasProject ? "Aberto · " : "") + fmtDate(rec.updated);
+      m.append(b, sm); open.append(im, m);
+      open.addEventListener("click", async () => {
+        if (rec.id === projId && hasProject) { hideHome(); return; }
+        try { await openProject(rec); } catch (e) { toast("Não consegui abrir esse projeto."); }
+      });
+      const del = document.createElement("button"); del.type = "button"; del.className = "icon del"; del.dataset.icon = "trash"; del.setAttribute("aria-label", "Excluir projeto " + (rec.name || ""));
       del.addEventListener("click", async () => {
-        if (!del.classList.contains("confirm")) { del.classList.add("confirm"); del.innerHTML = "Excluir?"; setTimeout(() => { if (del.isConnected && del.classList.contains("confirm")) { del.classList.remove("confirm"); del.textContent = ""; paintOne(del); } }, 3500); return; }
+        if (!del.classList.contains("confirm")) { del.classList.add("confirm"); del.textContent = "Excluir?"; setTimeout(() => { if (del.isConnected && del.classList.contains("confirm")) { del.classList.remove("confirm"); del.textContent = ""; paintOne(del); } }, 3500); return; }
         try { await idbReq("readwrite", s => s.delete(rec.id)); } catch (e) {}
-        if (rec.id === projId) { projId = null; await newProject(decodeDataUrl(SAMPLE), "Exemplo Mercedes 1113", true); }
+        if (rec.id === projId) { projId = null; hasProject = false; $("homeBack").hidden = true; try { localStorage.removeItem("oficina-last"); } catch (e) {} }
         renderProjects();
       });
-      row.append(im, info, del); L.appendChild(row);
+      card.append(open, del); L.appendChild(card);
     });
     paintIcons(L);
   }
+  function blankBlob(w, h) {
+    const c = document.createElement("canvas"); c.width = w; c.height = h;
+    const x = c.getContext("2d"); x.fillStyle = "#ffffff"; x.fillRect(0, 0, w, h);
+    return canvasBlob(c, "image/png");
+  }
+  document.querySelectorAll(".newcard[data-size]").forEach(b => b.addEventListener("click", async () => {
+    const [w, h] = b.dataset.size.split("x").map(Number);
+    const blob = await blankBlob(w, h);
+    await newProject(blob, b.dataset.name, false, true);
+    toast("Tela em branco criada. Para mudar a cor do fundo, use Pintura.");
+  }));
+  $("homeBack").addEventListener("click", hideHome);
+  $("homeBtn").addEventListener("click", showHome);
+  $("homeTool").addEventListener("click", showHome);
+  $("goHome").addEventListener("click", showHome);
   $("nameIn").addEventListener("input", e => { projName = e.target.value.trim() || "Minha skin"; $("projName").textContent = projName; scheduleSave(); });
   $("fileNew").addEventListener("change", e => {
     const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
@@ -1930,7 +2039,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
     const f = e.target.files && e.target.files[0]; e.target.value = ""; if (!f) return;
     swapBase(f).then(closePanel).catch(() => toast("Não consegui abrir essa imagem. Tente outra em JPG ou PNG."));
   });
-  $("sampleBtn").addEventListener("click", () => newProject(decodeDataUrl(SAMPLE), "Exemplo Mercedes 1113", true).then(closePanel));
+  $("sampleBtn").addEventListener("click", () => newProject(decodeDataUrl(SAMPLE), "Exemplo Mercedes 1113", true));
 
   // ---------- exportar ----------
   function setStatus(msg, kind) { const s = $("status"); s.textContent = msg; s.className = "status" + (kind ? " " + kind : ""); }
@@ -1941,7 +2050,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
       const strip = document.createElement("canvas"), sctx = strip.getContext("2d", { willReadFrequently: true });
       const mstrip = document.createElement("canvas"), msctx = mstrip.getContext("2d", { willReadFrequently: true });
       const SH = 256; strip.width = mstrip.width = fullW;
-      const P = params(), px = [0, 0, 0], hasMask = !!mask;
+      const P = target ? params() : null, px = [0, 0, 0], hasMask = !!mask && !!target;
       let y = 0;
       function step() {
         const h = Math.min(SH, fullH - y);
@@ -1950,7 +2059,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
         const id = sctx.getImageData(0, 0, fullW, h), d = id.data;
         let md = null;
         if (hasMask) { msctx.clearRect(0, 0, fullW, h); msctx.drawImage(maskC, 0, y * H / fullH, W, h * H / fullH, 0, 0, fullW, h); md = msctx.getImageData(0, 0, fullW, h).data; }
-        for (let j = 0; j < d.length; j += 4) {
+        for (let j = 0; P && j < d.length; j += 4) {
           const r = d[j] / 255, g = d[j + 1] / 255, b = d[j + 2] / 255;
           const [hh, ss, vv] = rgb2hsv(r, g, b);
           recolorPixel(r, g, b, hh, ss, vv, md ? md[j + 3] / 255 : 0, P, px);
@@ -2022,11 +2131,7 @@ code { font-size: 12.5px; background: var(--ui2); padding: 1px 6px; border-radiu
   (async () => {
     try { db = await idbOpen(); } catch (e) { db = null; }
     if (!db) setSaved("Salvamento automático indisponível");
-    let last = null; try { last = localStorage.getItem("oficina-last"); } catch (e) {}
-    if (db && last) {
-      try { const rec = await idbReq("readonly", s => s.get(last)); if (rec) { await openProject(rec); return; } } catch (e) {}
-    }
-    await newProject(decodeDataUrl(SAMPLE), "Exemplo Mercedes 1113", true, true);
+    showHome();
   })();
 })();
 

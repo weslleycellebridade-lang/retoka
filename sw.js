@@ -1,5 +1,5 @@
 // Retoka: funciona offline depois da primeira abertura
-const CACHE = "retoka-v1";
+const CACHE = "retoka-v2";
 const APP = ["./", "index.html", "manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-192.png", "icon-maskable-512.png"];
 
 self.addEventListener("install", e => {
